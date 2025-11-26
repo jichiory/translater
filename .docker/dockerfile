@@ -1,0 +1,22 @@
+# Dockerfile
+FROM python:3.12-slim
+
+# Variables d'environnement
+ENV SOURCE_LANG=fr
+ENV TARGET_LANG=en
+ENV INPUT_DIR=/app/input
+ENV OUTPUT_DIR=/app/output
+
+# Dossier de travail
+WORKDIR /app
+
+# Copier le code et le dossier input dans /app
+COPY src/ ./src/
+COPY input/ ./input/
+
+# Installer argostranslate
+RUN pip install --no-cache-dir argostranslate
+
+
+# Commande par défaut
+CMD ["python", "src/main.py"]

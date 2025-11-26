@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  translater:
+    build:
+      context: . 
+      dockerfile: .docker/Dockerfile
+    container_name: translater
+    environment:
+      - SOURCE_LANG=fr
+      - TARGET_LANG=en
+    restart: "no"
