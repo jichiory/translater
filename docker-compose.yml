@@ -8,5 +8,7 @@ services:
     container_name: translater
     environment:
       - SOURCE_LANG=fr
-      - TARGET_LANG=en
+      - TARGET_LANG=ar
     restart: "no"
+    volumes:
+      - ./output:/app/output

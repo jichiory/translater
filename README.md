@@ -15,36 +15,71 @@ This project provides a script to translate `.arb` files from a source language 
 
 These can be set in your shell or through `docker-compose.yml` for dynamic language selection.
 
-## Running Locally
+## Running the Project
 
-1. Create a Python virtual environment (if not already):
+### 1. Local (WSL / Python)
+
+1. **Create a virtual environment:**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the script:
+3. **Set the languages (optional, defaults to `fr→en`):**
+
+```bash
+export SOURCE_LANG=fr
+export TARGET_LANG=en
+```
+
+4. **Run the script:**
 
 ```bash
 python src/main.py
 ```
 
-## Running with Docker
+Translated `.arb` files from `input/` will be written to `output/`.
 
-1. Build and start the container:
+---
+
+### 2. Docker
+
+1. **Build and start the container:**
 
 ```bash
 docker-compose up --build
 ```
 
-2. Input files are mounted or copied into the container; translated output will appear in `output/`.
+2. **Volumes:**
+   The `input/` folder is mounted for reading and `output/` for results:
+
+```yaml
+volumes:
+  - ./input:/app/input
+  - ./output:/app/output
+```
+
+3. **Change languages dynamically:**
+
+```yaml
+environment:
+  - SOURCE_LANG=fr
+  - TARGET_LANG=es
+```
+
+4. **Run container manually without docker-compose:**
+
+```bash
+docker build -t translater .
+docker run --rm -e SOURCE_LANG=fr -e TARGET_LANG=en -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output translater
+```
 
 ## Folder Structure
 
